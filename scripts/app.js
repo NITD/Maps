@@ -74,8 +74,8 @@ function init(map) {
 	navigator.geolocation.watchPosition(function (position) {
 		if (previousLocation.lat === null || previousLocation.lng === null) return;
 		var newlocation = coord2px(position.coords.latitude, position.coords.longitude);
-		camera.position.x += xd;
-		camera.position.z += zd;
+		camera.position.x += newlocation.xd;
+		camera.position.z += newlocation.zd;
 		previousLocation.lat = position.coords.latitude;
 		previousLocation.lng = position.coords.longitude;
 	}, function (err) {
