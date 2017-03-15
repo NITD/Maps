@@ -17,7 +17,7 @@ function createMap(position) {
 			+ position.coords.latitude
 			+ ','
 			+ position.coords.longitude
-			+ '&zoom=18&size=512x512&style=feature:all|element:labels|visibility:off';
+			+ '&zoom=18&size=512x512&style=feature:all|element:labels|visibility:off&key=AIzaSyAEGq1hndBy1-c1KmW8Gs8KrDA3YK78acU';
 	var image = new Image();
 	image.crossOrigin = 'anonymous';
 	image.src = url;
