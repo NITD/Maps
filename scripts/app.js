@@ -4,10 +4,10 @@ if ('geolocation' in navigator) {
 	document.body.innerHTML = 'Location API Not Supported';
 }
 
-var previousLocation = {
-	lat: null,
-	lng: null
-};
+// var previousLocation = {
+// 	lat: null,
+// 	lng: null
+// };
 
 function createMap(position) {
 	var url = 'https://maps.googleapis.com/maps/api/staticmap?center='
@@ -19,8 +19,8 @@ function createMap(position) {
 	image.crossOrigin = 'anonymous';
 	image.src = url;
 
-	previousLocation.lat = position.coords.latitude;
-	previousLocation.lng = position.coords.longitude;
+	// previousLocation.lat = position.coords.latitude;
+	// previousLocation.lng = position.coords.longitude;
 	image.onload = function (e) {
 		init(e.target);
 	};
@@ -29,22 +29,22 @@ function createMap(position) {
 // createMap({ coords: { latitude: 28.8429333, longitude: 77.10502 }});
 //createMap({ coords: { latitude: 0, longitude: 0 }});
 
-var coordrange = {
-	lat: 180 / (Math.pow(2, 17) * 512),
-	lng: 360 / (Math.pow(2, 17) * 512)
-};
+// var coordrange = {
+// 	lat: 180 / (Math.pow(2, 17) * 512),
+// 	lng: 360 / (Math.pow(2, 17) * 512)
+// };
 
-function coord2px(lat, lng) {
-	if (previousLocation.lat === null || previousLocation.lng === null) return;
-	var deltalat = lat - previousLocation.lat;
-	var deltalng = lng - previousLocation.lng;
-	var deltax = deltalng / coordrange.lng;
-	var deltaz = deltalat / coordrange.lat;
-	return {
-		xd: deltax,
-		zd: deltaz
-	};
-}
+// function coord2px(lat, lng) {
+// 	if (previousLocation.lat === null || previousLocation.lng === null) return;
+// 	var deltalat = lat - previousLocation.lat;
+// 	var deltalng = lng - previousLocation.lng;
+// 	var deltax = deltalng / coordrange.lng;
+// 	var deltaz = deltalat / coordrange.lat;
+// 	return {
+// 		xd: deltax,
+// 		zd: deltaz
+// 	};
+// }
 
 var renderer, scene, camera;
 function init(map) {
@@ -68,19 +68,19 @@ function init(map) {
 
 	animate();
 
-	navigator.geolocation.watchPosition(function (position) {
-		if (previousLocation.lat === null || previousLocation.lng === null) return;
-		var newlocation = coord2px(position.coords.latitude, position.coords.longitude);
-		camera.position.x += xd;
-		camera.position.z += zd;
-		previousLocation.lat = position.coords.latitude;
-		previousLocation.lng = position.coords.longitude;
-	}, function (err) {
-		console.log(err.message);
-	}, {
-		enableHighAccuracy: true,
-		maximumAge: 0
-	});
+	// navigator.geolocation.watchPosition(function (position) {
+	// 	if (previousLocation.lat === null || previousLocation.lng === null) return;
+	// 	var newlocation = coord2px(position.coords.latitude, position.coords.longitude);
+	// 	camera.position.x += xd;
+	// 	camera.position.z += zd;
+	// 	previousLocation.lat = position.coords.latitude;
+	// 	previousLocation.lng = position.coords.longitude;
+	// }, function (err) {
+	// 	console.log(err.message);
+	// }, {
+	// 	enableHighAccuracy: true,
+	// 	maximumAge: 0
+	// });
 }
 
 function animate() {
