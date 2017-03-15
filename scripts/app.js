@@ -96,7 +96,8 @@ function init(map) {
 		app.controls.getObject().position.set(0, 50, 0);
 	} else {
 		app.controls = new THREE.DeviceOrientationControls(camera);
-		camera.position.set(0, 50, 0);
+		app.controls.object.position.set(0, 50, 0);
+		window.alert('mobile');
 	}
 
 	var g = new THREE.PlaneGeometry(500, 500, 50, 50);
