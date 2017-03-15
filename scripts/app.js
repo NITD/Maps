@@ -1,10 +1,10 @@
-if ('geolocation' in navigator) {
-	navigator.geolocation.getCurrentPosition(createMap, function (err) {
-		window.alert(err.message);
-	});
-} else {
-	document.body.innerHTML = 'Location API Not Supported';
-}
+// if ('geolocation' in navigator) {
+// 	navigator.geolocation.getCurrentPosition(createMap, function (err) {
+// 		window.alert(err.message);
+// 	});
+// } else {
+// 	document.body.innerHTML = 'Location API Not Supported';
+// }
 
 // var previousLocation = {
 // 	lat: null,
@@ -12,7 +12,7 @@ if ('geolocation' in navigator) {
 // };
 
 function createMap(position) {
-	window.alert(position.coords);
+	window.alert(position.coords.latitude + " " + position.coords.longitude);
 	var url = 'https://maps.googleapis.com/maps/api/staticmap?center='
 			+ position.coords.latitude
 			+ ','
@@ -29,7 +29,7 @@ function createMap(position) {
 	};
 }
 
-// createMap({ coords: { latitude: 28.8429333, longitude: 77.10502 }});
+createMap({ coords: { latitude: 28.8429333, longitude: 77.10502 }});
 //createMap({ coords: { latitude: 0, longitude: 0 }});
 
 // var coordrange = {
