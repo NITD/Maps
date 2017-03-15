@@ -1,3 +1,36 @@
+var app = {};
+app.havePointerLock =       'pointerLockElement' in document
+				   ||    'mozPointerLockElement' in document
+				   || 'webkitPointerLockElement' in document;
+
+app.enablePointerLock = function () {
+	var element = document.body;
+	element.requestPointerLock = element.requestPointerLock
+							  || element.mozRequestPointerLock
+							  || element.webkitRequestPointerLock;
+
+	function pointerLockChange() {
+		app.controls.enabled = true;
+	}
+
+	function pointerLockError() {
+		console.log( 'Pointer Lock Error' );
+	}
+
+	document.addEventListener(       'pointerlockchange', pointerLockChange, false );
+	document.addEventListener(    'mozpointerlockchange', pointerLockChange, false );
+	document.addEventListener( 'webkitpointerlockchange', pointerLockChange, false );
+
+	document.addEventListener(       'pointerlockerror', pointerLockError, false );
+	document.addEventListener(    'mozpointerlockerror', pointerLockError, false );
+	document.addEventListener( 'webkitpointerlockerror', pointerLockError, false );
+
+	element.addEventListener( 'click', function ( event ) {
+		element.requestPointerLock();
+	} );
+};
+var haveDeviceOrientation = 'onorientationchange' in window;
+
 if ('geolocation' in navigator) {
 	navigator.geolocation.getCurrentPosition(createMap, function (err) {
 		window.alert(err.message);
@@ -53,8 +86,18 @@ var renderer, scene, camera;
 function init(map) {
 	scene = new THREE.Scene();
 	camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-	camera.position.set(0, 10, 0);
+	// camera.position.set(0, 50, 0);
 	// camera.rotation.x = -Math.PI / 2;
+
+	if (app.havePointerLock && !haveDeviceOrientation) {
+		app.controls = new THREE.PointerLockControls(camera);
+		scene.add(app.controls.getObject());
+		app.enablePointerLock();
+		app.controls.getObject().position.set(0, 50, 0);
+	} else {
+		app.controls = new THREE.DeviceOrientationControls(camera);
+		camera.position.set(0, 50, 0);
+	}
 
 	var g = new THREE.PlaneGeometry(500, 500, 50, 50);
 	g.rotateX(-Math.PI/2);
@@ -74,8 +117,8 @@ function init(map) {
 	navigator.geolocation.watchPosition(function (position) {
 		if (previousLocation.lat === null || previousLocation.lng === null) return;
 		var newlocation = coord2px(position.coords.latitude, position.coords.longitude);
-		camera.position.x += newlocation.xd;
-		camera.position.z += newlocation.zd;
+		// camera.position.x += newlocation.xd;
+		// camera.position.z += newlocation.zd;
 		previousLocation.lat = position.coords.latitude;
 		previousLocation.lng = position.coords.longitude;
 	}, function (err) {
@@ -89,4 +132,7 @@ function init(map) {
 function animate() {
 	renderer.render(scene, camera);
 	requestAnimationFrame(animate);
+	if (haveDeviceOrientation) {
+		app.controls.update();
+	}
 }
