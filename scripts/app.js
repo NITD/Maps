@@ -1,5 +1,7 @@
 if ('geolocation' in navigator) {
-	navigator.geolocation.getCurrentPosition(createMap);
+	navigator.geolocation.getCurrentPosition(createMap, function (err) {
+		window.alert(err.message);
+	});
 } else {
 	document.body.innerHTML = 'Location API Not Supported';
 }
@@ -10,6 +12,7 @@ if ('geolocation' in navigator) {
 // };
 
 function createMap(position) {
+	window.alert(position.coords);
 	var url = 'https://maps.googleapis.com/maps/api/staticmap?center='
 			+ position.coords.latitude
 			+ ','
