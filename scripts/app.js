@@ -53,8 +53,8 @@ var renderer, scene, camera;
 function init(map) {
 	scene = new THREE.Scene();
 	camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-	camera.position.set(0, 1000, 0);
-	camera.rotation.x = -Math.PI / 2;
+	camera.position.set(0, 10, 0);
+	// camera.rotation.x = -Math.PI / 2;
 
 	var g = new THREE.PlaneGeometry(500, 500, 50, 50);
 	g.rotateX(-Math.PI/2);
